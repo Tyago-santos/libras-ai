@@ -1,0 +1,20 @@
+{
+  "name": "libras-ai",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Aplicativo Android de tradução de português para Libras com avatar 3D (MVP)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace @libras-ai/api",
+    "dev:mobile": "npm run start --workspace @libras-ai/mobile",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

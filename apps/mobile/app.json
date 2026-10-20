@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "Libras AI",
+    "slug": "libras-ai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#F6F8FB",
+      "resizeMode": "contain",
+      "image": "./assets/icon.png"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "ai.libras.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "O Libras AI usa o microfone para transcrever sua fala e traduzir para Libras."
+      }
+    },
+    "android": {
+      "package": "ai.libras.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": ["android.permission.RECORD_AUDIO"],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "O Libras AI usa o microfone para transcrever sua fala e traduzir para Libras."
+        }
+      ]
+    ]
+  }
+}
