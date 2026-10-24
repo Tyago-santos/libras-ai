@@ -171,6 +171,25 @@ export const textInputRequestSchema = z.object({
 });
 export type TextInputRequest = z.infer<typeof textInputRequestSchema>;
 
+/**
+ * Transcrição direta de frase: o app grava o áudio (MediaRecorder), detecta
+ * a pausa natural e envia — o backend devolve a frase em prosa pt-BR (Gemini).
+ * Estadoless (sem sessão): é o caminho de voz do app mobile/desktop.
+ */
+export const transcribeRequestSchema = z.object({
+  /** Áudio em base64 (o app converte para WAV16k mono antes de enviar). */
+  audioBase64: z.string().min(1).max(5_000_000),
+  mimeType: z.string().min(1).max(100).optional(),
+  durationMs: z.number().int().positive().max(120_000).optional(),
+});
+export type TranscribeRequest = z.infer<typeof transcribeRequestSchema>;
+
+export const transcribeResponseSchema = z.object({
+  /** Frase em prosa pontuada; vazio quando não há fala compreensível. */
+  text: z.string(),
+});
+export type TranscribeResponse = z.infer<typeof transcribeResponseSchema>;
+
 // ---------------------------------------------------------------------------
 // Métricas (§12)
 // ---------------------------------------------------------------------------

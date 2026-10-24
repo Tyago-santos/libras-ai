@@ -1,7 +1,9 @@
 import type { FastifyInstance } from "fastify";
 import {
   textInputRequestSchema,
+  transcribeRequestSchema,
   transcriptionChunkRequestSchema,
+  type TranscribeResponse,
   type TranscriptionResponse,
 } from "@libras-ai/contracts";
 import { AppError } from "../../shared/lib/errors";
@@ -9,10 +11,12 @@ import { validate } from "../../shared/lib/validate";
 import { metrics } from "../../shared/lib/metrics";
 import { sessionStore } from "../sessions";
 import { translationQueue } from "../translations";
+import { transcribePhrase } from "./speech/phrase";
 import { speechProvider } from "./speech";
 import { utteranceManager } from "./utterance-manager";
 
 /**
+ * POST /api/transcribe     — frase gravada no app → prosa pt-BR (Gemini).
  * POST /api/transcriptions/chunks — recebe chunk de áudio (ou marcação de
  *   silêncio) e devolve o parcial atual + trecho confirmado (se houver).
  * POST /api/utterances/text       — modo texto (entrada manual, §10).
@@ -20,6 +24,15 @@ import { utteranceManager } from "./utterance-manager";
  * Trechos confirmados entram imediatamente na fila de tradução (§6.1).
  */
 export async function transcriptionRoutes(app: FastifyInstance): Promise<void> {
+  // Caminho de voz principal do app: gravação local (MediaRecorder) +
+  // transcrição aqui. Estadoless — sem sessão, sem fila (§5 alternativo).
+  app.post("/api/transcribe", async (req, reply) => {
+    const body = validate(transcribeRequestSchema, req.body, "POST /api/transcribe");
+    const text = await transcribePhrase(body);
+    const response: TranscribeResponse = { text };
+    return reply.send(response);
+  });
+
   app.post("/api/transcriptions/chunks", async (req, reply) => {
     const body = validate(
       transcriptionChunkRequestSchema,
