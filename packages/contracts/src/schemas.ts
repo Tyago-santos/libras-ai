@@ -99,6 +99,8 @@ export const translationResultSchema = z.object({
   animationData: z.unknown().optional(),
   /** Origem da animação: vídeo oficial do VLibras ou simulação local do app. */
   animationSource: z.enum(["vlibras-video", "simulation", "none"]).optional(),
+  /** Origem da glosa: API oficial do VLibras ou IA (Gemini) quando a oficial cai. */
+  translationSource: z.enum(["vlibras", "llm"]).optional(),
   /** Tokens da glosa sem sinal correspondente no dicionário oficial. */
   unsupportedTokens: z.array(z.string()).optional(),
   errorCode: z.string().optional(),
@@ -107,6 +109,26 @@ export const translationResultSchema = z.object({
   updatedAt: z.string().datetime(),
 });
 export type TranslationResult = z.infer<typeof translationResultSchema>;
+
+/** POST /api/translations/live — tradução síncrona para o fluxo em tempo real. */
+export const translationLiveRequestSchema = z.object({
+  text: z.string().min(1).max(500),
+});
+export type TranslationLiveRequest = z.infer<typeof translationLiveRequestSchema>;
+
+export const translationLiveResultSchema = z.object({
+  /** Glosa pronta para o player Unity (tokens + marcadores gramaticais). */
+  gloss: z.string(),
+  /** Quem gerou a glosa: oficial do VLibras ou IA (fallback quando ela cai). */
+  source: z.enum(["vlibras", "llm"]),
+  /** "unsupported" quando nenhum token não-marcador existe no dicionário. */
+  status: z.enum(["ready", "unsupported"]),
+  /** Tokens da glosa sem sinal no dicionário oficial (§16: nunca simular). */
+  unsupportedTokens: z.array(z.string()).optional(),
+  /** Latência total desta chamada (chamada de tradução incluída). */
+  durationMs: z.number().int().nonnegative(),
+});
+export type TranslationLiveResult = z.infer<typeof translationLiveResultSchema>;
 
 // ---------------------------------------------------------------------------
 // Transcrição / utterances

@@ -1,8 +1,8 @@
 import type { TranslationResult } from "@libras-ai/contracts";
-import { env } from "../../config/env";
-import { AppError } from "../../lib/errors";
-import { newTaskId } from "../../lib/ids";
-import { metrics } from "../../lib/metrics";
+import { env } from "../../shared/config/env";
+import { AppError } from "../../shared/lib/errors";
+import { newTaskId } from "../../shared/lib/ids";
+import { metrics } from "../../shared/lib/metrics";
 
 /**
  * Fila de tradução em memória (§6.1 da spec).

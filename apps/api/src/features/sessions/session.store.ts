@@ -1,7 +1,7 @@
 import type { Session, SessionConfig } from "@libras-ai/contracts";
 import { sessionConfigSchema } from "@libras-ai/contracts";
-import { env } from "../../config/env";
-import { newSessionId } from "../../lib/ids";
+import { env } from "../../shared/config/env";
+import { newSessionId } from "../../shared/lib/ids";
 
 /** Armazenamento em memória de sessões (MVP — §3: fila em memória). */
 

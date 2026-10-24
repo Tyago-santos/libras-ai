@@ -1,4 +1,4 @@
-import { env } from "../../config/env";
+import { env } from "../../../shared/config/env";
 import { GeminiSpeechProvider } from "./gemini";
 import { MockSpeechProvider } from "./mock";
 import type { SpeechProvider } from "./types";

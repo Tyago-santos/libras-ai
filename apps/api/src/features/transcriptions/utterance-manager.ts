@@ -1,5 +1,5 @@
 import type { Utterance } from "@libras-ai/contracts";
-import { newUtteranceId } from "../../lib/ids";
+import { newUtteranceId } from "../../shared/lib/ids";
 
 /**
  * Gerenciador de frases (§5 da spec).

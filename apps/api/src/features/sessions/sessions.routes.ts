@@ -1,10 +1,10 @@
 import type { FastifyInstance } from "fastify";
 import { createSessionRequestSchema } from "@libras-ai/contracts";
-import { AppError } from "../../lib/errors";
-import { validate } from "../../lib/validate";
-import { metrics } from "../../lib/metrics";
-import { sessionStore } from "./store";
-import { translationQueue } from "../translations/queue";
+import { AppError } from "../../shared/lib/errors";
+import { validate } from "../../shared/lib/validate";
+import { metrics } from "../../shared/lib/metrics";
+import { sessionStore } from "./session.store";
+import { translationQueue } from "../translations";
 
 /**
  * POST /api/sessions       — inicia sessão (§8)

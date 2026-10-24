@@ -30,15 +30,15 @@ O app **nunca** fala com serviços externos: todas as chaves e chamadas ficam no
 
 | Módulo | Responsabilidade |
 | --- | --- |
-| `config/env` | Variáveis de ambiente validadas com Zod (com defaults seguros). |
-| `modules/sessions` | CRUD de sessões em memória + varredura de expiração (`SESSION_TTL_MS`). |
-| `modules/transcriptions` | Recebe chunks/silêncio/texto; `UtteranceManager` decide quando um trecho está pronto (§5). |
-| `modules/translations` | Fila por sessão (sequencial), retry, política de atraso (§6.3) e métricas de latência. |
-| `modules/metrics` | `GET /api/sessions/:id/metrics` — mediana/p95 de espera, processamento e total (§12). |
-| `modules/avatar` | `GET /api/animations/:id` — proxy do vídeo oficial do VLibras com token (§8). |
-| `providers/speech` | `mock` (padrão, sem chaves) e `gemini` (real, `GEMINI_API_KEY`), com fallback. |
-| `providers/vlibras` | `translate` (POST real), `dictionary` (trie oficial), `video` (fluxo Conecta). |
-| `middleware/error-handler` | Erros centralizados `{ error: { code, message } }` + logs redigidos (§11). |
+| `shared/config/env` | Variáveis de ambiente validadas com Zod (com defaults seguros). |
+| `features/sessions` | CRUD de sessões em memória + varredura de expiração (`SESSION_TTL_MS`). |
+| `features/transcriptions` | Recebe chunks/silêncio/texto; `UtteranceManager` decide quando um trecho está pronto (§5). |
+| `features/translations` | Fila por sessão (sequencial), retry, política de atraso (§6.3) e métricas de latência. |
+| `features/metrics` | `GET /api/sessions/:id/metrics` — mediana/p95 de espera, processamento e total (§12). |
+| `features/avatar` | `GET /api/animations/:id` — proxy do vídeo oficial do VLibras com token (§8). |
+| `features/transcriptions/speech` | `mock` (padrão, sem chaves) e `gemini` (real, `GEMINI_API_KEY`), com fallback. |
+| `shared/providers/vlibras` | `translate` (POST real), `dictionary` (trie oficial), `video` (fluxo Conecta). |
+| `shared/middleware/error-handler` | Erros centralizados `{ error: { code, message } }` + logs redigidos (§11). |
 
 ### Confirmação de trechos (§5)
 

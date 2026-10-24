@@ -4,12 +4,12 @@ import {
   transcriptionChunkRequestSchema,
   type TranscriptionResponse,
 } from "@libras-ai/contracts";
-import { AppError } from "../../lib/errors";
-import { validate } from "../../lib/validate";
-import { metrics } from "../../lib/metrics";
-import { sessionStore } from "../sessions/store";
-import { translationQueue } from "../translations/queue";
-import { speechProvider } from "../../providers/speech";
+import { AppError } from "../../shared/lib/errors";
+import { validate } from "../../shared/lib/validate";
+import { metrics } from "../../shared/lib/metrics";
+import { sessionStore } from "../sessions";
+import { translationQueue } from "../translations";
+import { speechProvider } from "./speech";
 import { utteranceManager } from "./utterance-manager";
 
 /**

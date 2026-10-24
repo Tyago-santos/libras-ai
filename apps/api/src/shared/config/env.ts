@@ -4,6 +4,18 @@ import { z } from "zod";
  * Configuração do backend por variáveis de ambiente (.env).
  * Nenhuma chave permanente é exposta ao aplicativo (§8 da spec).
  */
+
+// Carrega .env com a API nativa do Node (>=20.12) — sem dependência de dotenv.
+// Procura na raiz do workspace e no diretório de execução.
+for (const candidate of [".env", "../../.env", "../.env"]) {
+  try {
+    process.loadEnvFile(candidate);
+    break;
+  } catch {
+    // arquivo inexistente — segue com defaults
+  }
+}
+
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   HOST: z.string().default("0.0.0.0"),
@@ -27,6 +39,8 @@ const envSchema = z.object({
   /** mock: sem chaves, frases simuladas. gemini: transcrição real de áudio. */
   SPEECH_PROVIDER: z.enum(["mock", "gemini"]).default("mock"),
   GEMINI_API_KEY: z.string().optional().default(""),
+  /** Chaves extras separadas por vírgula — rotação quando a principal esgota cota. */
+  GEMINI_API_KEY_FALLBACKS: z.string().optional().default(""),
   GEMINI_MODEL: z.string().default("gemini-2.5-flash"),
   /** Em desenvolvimento, se o provider real falhar, cai para o mock. */
   SPEECH_FALLBACK_MOCK: z

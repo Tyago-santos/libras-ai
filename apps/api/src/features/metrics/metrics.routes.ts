@@ -1,8 +1,8 @@
 import type { FastifyInstance } from "fastify";
-import { AppError } from "../../lib/errors";
-import { metrics } from "../../lib/metrics";
-import { sessionStore } from "../sessions/store";
-import { translationQueue } from "../translations/queue";
+import { AppError } from "../../shared/lib/errors";
+import { metrics } from "../../shared/lib/metrics";
+import { sessionStore } from "../sessions";
+import { translationQueue } from "../translations";
 
 /**
  * GET /api/sessions/:id/metrics — métricas de latência da sessão (§12).

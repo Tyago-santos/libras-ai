@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { UtteranceManager, computeDelta } from "../src/modules/transcriptions/utterance-manager";
+import { UtteranceManager, computeDelta } from "../src/features/transcriptions";
 
 describe("UtteranceManager (§5 — pausas e frases)", () => {
   let manager: UtteranceManager;

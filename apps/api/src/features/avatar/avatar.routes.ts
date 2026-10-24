@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify";
-import { AppError } from "../../lib/errors";
-import { translationQueue } from "../translations/queue";
-import { videoAuthHeaders, videoFileUrl } from "../../providers/vlibras/video";
+import { AppError } from "../../shared/lib/errors";
+import { translationQueue } from "../translations";
+import { videoAuthHeaders, videoFileUrl } from "../../shared/providers/vlibras/video";
 
 /**
  * GET /api/animations/:translationId — proxy do vídeo real do VLibras.

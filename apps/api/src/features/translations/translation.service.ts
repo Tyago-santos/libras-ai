@@ -1,16 +1,18 @@
 import type { TranslationResult } from "@libras-ai/contracts";
-import { env } from "../../config/env";
-import { dictionary } from "../../providers/vlibras/dictionary";
-import { translateToGloss } from "../../providers/vlibras/translate";
-import { requestVideo, waitForVideo, videoFileUrl } from "../../providers/vlibras/video";
-import { metrics } from "../../lib/metrics";
-import type { QueueTask, TaskStatus } from "./queue";
-import { translationQueue } from "./queue";
+import { env } from "../../shared/config/env";
+import { dictionary } from "../../shared/providers/vlibras/dictionary";
+import { translateToGloss } from "../../shared/providers/vlibras/translate";
+import { requestVideo, waitForVideo, videoFileUrl } from "../../shared/providers/vlibras/video";
+import { metrics } from "../../shared/lib/metrics";
+import type { QueueTask, TaskStatus } from "./translation.queue";
+import { translationQueue } from "./translation.queue";
+import { llmTranslateToGloss } from "./providers/llm";
 
 /**
  * Pipeline de processamento de uma tarefa da fila (§6.1 + §7):
  *
- * 1. Tradução real PT → glosa (VLibras translate, sem auth — PoC validado);
+ * 1. Tradução real PT → glosa: API oficial VLibras (PoC validado) com
+ *    fallback para IA (Gemini) quando ela cai — nunca mock;
  * 2. Validação dos tokens da glosa no dicionário oficial (sinais inexistentes
  *    ficam em `unsupportedTokens`);
  * 3. Geração de animação: vídeo real quando há credencial Conecta
@@ -24,8 +26,20 @@ import { translationQueue } from "./queue";
 export async function processTranslation(
   task: QueueTask,
 ): Promise<{ status: TaskStatus; fields: Partial<TranslationResult> }> {
-  // 1. Tradução (real)
-  const { gloss, durationMs } = await translateToGloss(task.text);
+  // 1. Tradução (real): oficial → fallback IA
+  let gloss: string;
+  let translationSource: TranslationResult["translationSource"];
+  try {
+    ({ gloss } = await translateToGloss(task.text));
+    translationSource = "vlibras";
+  } catch (officialError) {
+    try {
+      ({ gloss } = await llmTranslateToGloss(task.text));
+      translationSource = "llm";
+    } catch {
+      throw officialError;
+    }
+  }
 
   // 2. Dicionário oficial de sinais
   const { unsupported } = dictionary.analyzeGloss(gloss);
@@ -58,6 +72,7 @@ export async function processTranslation(
     status,
     fields: {
       gloss,
+      translationSource,
       animationUrl,
       animationSource,
       unsupportedTokens: unsupported.length > 0 ? unsupported : undefined,

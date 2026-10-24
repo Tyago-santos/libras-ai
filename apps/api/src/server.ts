@@ -1,5 +1,5 @@
 import { buildApp } from "./app";
-import { env } from "./config/env";
+import { env } from "./shared/config/env";
 
 /** Ponto de entrada do backend (§9: server.ts). */
 async function main(): Promise<void> {

@@ -18,7 +18,7 @@ Resposta (200): glosa em texto, ex. `BOM_DIA TUDO_BEM [INTERROGAÇÃO]`.
 Também observamos formato alternado JSON `{"traducao": "..."}` — o backend normaliza ambos
 (`normalizeGloss`).
 
-Uso no projeto: `apps/api/src/providers/vlibras/translate.ts` (com timeout e retries na fila).
+Uso no projeto: `apps/api/src/shared/providers/vlibras/translate.ts` (com timeout e retries na fila).
 
 ### 2. Dicionário oficial de sinais — ✅ funciona sem autenticação
 
@@ -52,7 +52,7 @@ O gateway público `www.gov.br/translate?text=…` retorna 400 (não é um subst
 
 - chamar `POST /video` após a tradução (com polling de status dentro de `VIDEO_POLL_TIMEOUT_MS`);
 - responder `animationSource: "vlibras-video"` + `animationUrl: /api/animations/:id`;
-- o backend serve o MP4 via proxy (`modules/avatar/routes`) com o token no header — o app nunca
+- o backend serve o MP4 via proxy (`features/avatar/avatar.routes`) com o token no header — o app nunca
   vê credenciais (§8).
 
 Sem o token (estado atual do MVP), o backend responde `animationSource: "simulation"` e o app

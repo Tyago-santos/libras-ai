@@ -1,5 +1,5 @@
-import { env } from "../../config/env";
-import { AppError } from "../../lib/errors";
+import { env } from "../../../shared/config/env";
+import { AppError } from "../../../shared/lib/errors";
 import { MockSpeechProvider } from "./mock";
 import type { SpeechInput, SpeechOutput, SpeechProvider } from "./types";
 

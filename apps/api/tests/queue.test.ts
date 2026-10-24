@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { translationQueue } from "../src/modules/translations/queue";
-import type { QueueTask } from "../src/modules/translations/queue";
+import { translationQueue } from "../src/features/translations";
+import type { QueueTask } from "../src/features/translations";
 
 const ok = (task: QueueTask) =>
   Promise.resolve({ status: "ready" as const, fields: { gloss: `GLOSAS ${task.sequence}` } });

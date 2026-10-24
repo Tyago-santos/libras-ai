@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import { normalizeGloss, translateToGloss } from "../src/providers/vlibras/translate";
-import { analyzeGloss, dictionary, hasSign, type TrieNode } from "../src/providers/vlibras/dictionary";
-import { parseGeminiOutput } from "../src/providers/speech/gemini";
+import { normalizeGloss, translateToGloss } from "../src/shared/providers/vlibras/translate";
+import { analyzeGloss, dictionary, hasSign, type TrieNode } from "../src/shared/providers/vlibras/dictionary";
+import { parseGeminiOutput } from "../src/features/transcriptions/speech/gemini";
 
 describe("VLibras translate (PoC real — formato verificado em 2026-10-20)", () => {
   it("normaliza glosa em texto puro", () => {
