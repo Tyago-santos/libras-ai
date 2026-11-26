@@ -29,11 +29,11 @@
 
 | | |
 |---|---|
-| [🎯 O que é](#o-que-e) | [🧍 Avatar e IA](#avatar-e-ia) |
-| [✨ Funcionalidades](#funcionalidades) | [🔒 Privacidade](#privacidade) |
-| [🧩 Como funciona](#como-funciona) | [🚀 Como rodar](#como-rodar) |
-| [📱 Partes do projeto](#partes-do-projeto) | [☁️ Deploy e testes](#deploy-e-testes) |
-| [🛠️ Tecnologias](#tecnologias) | [📝 Notas](#notas) |
+| [🎯 O que é](#user-content-o-que-e) | [🧍 Avatar e IA](#user-content-avatar-e-ia) |
+| [✨ Funcionalidades](#user-content-funcionalidades) | [🔒 Privacidade](#user-content-privacidade) |
+| [🧩 Como funciona](#user-content-como-funciona) | [🚀 Como rodar](#user-content-como-rodar) |
+| [📱 Partes do projeto](#user-content-partes-do-projeto) | [☁️ Deploy e testes](#user-content-deploy-e-testes) |
+| [🛠️ Tecnologias](#user-content-tecnologias) | [📝 Notas](#user-content-notas) |
 
 ---
 
